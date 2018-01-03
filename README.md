@@ -4,6 +4,9 @@ First experiments with react native
 
 ## Change log
 
+2018-01-03 - Jan Maennig
+* Add pull down to refresh in search results
+
 2017-12-25 - Jan Maennig
 
 * Add map to detail page
