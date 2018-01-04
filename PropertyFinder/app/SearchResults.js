@@ -13,53 +13,8 @@ import {
 	Linking,
 } from 'react-native';
 import SearchResultDetails from './SearchResultDetails';
-import PTRView from 'react-native-pull-to-refresh';
-
-function urlForQueryAndPage( key, value, pageNumber ) {
-	const data = {
-		country: 'uk',
-		pretty: '1',
-		encoding: 'json',
-		listing_type: 'buy',
-		action: 'search_listings',
-		page: pageNumber,
-	};
-	data[ key ] = value;
-
-	const querystring = Object.keys( data )
-		.map( key => key + '=' + encodeURIComponent( data[ key ] ) )
-		.join( '&' );
-
-	return 'https://api.nestoria.co.uk/api?' + querystring;
-}
-
-class ListItem extends React.PureComponent {
-	_onPress = () => {
-		this.props.onPressItem( this.props.index, this.props.item );
-	};
-
-	render() {
-		const item = this.props.item;
-		const price = item.price_formatted.split( ' ' )[ 0 ];
-		return (
-			<TouchableHighlight
-				onPress={this._onPress}
-				underlayColor='#dddddd'>
-				<View>
-					<View style={styles.rowContainer}>
-						<Image style={styles.thumb} source={{ uri: item.img_url }} />
-						<View style={styles.textContainer}>
-							<Text style={styles.price}>{price}</Text>
-							<Text style={styles.title}
-							      numberOfLines={1}>{item.title}</Text>
-						</View>
-					</View>
-					<View style={styles.separator} />
-				</View>
-			</TouchableHighlight>
-		);
-	}
-}
+import ListItem from './components/ListItem';
+import { urlForQueryAndPage } from './services/SearchHandlers';
 
 export default class SearchResults extends Component<{}> {
 	constructor( props ) {
