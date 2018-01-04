@@ -21,3 +21,7 @@ First experiments with react native
 2017-12-16 - Jan Maennig
 * Initial to complete these [tutorial](https://www.raywenderlich.com/165140/react-native-tutorial-building-ios-android-apps-javascript)
 
+## Roadmap
+
+* Refactoring search and result page to prevent duplicate code
+* Add form to express interest for property object
