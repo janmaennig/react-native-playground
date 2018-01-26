@@ -2,20 +2,20 @@
 
 import React, { Component } from 'react';
 
-export function urlForQueryAndPage( key, value, pageNumber ) {
-	const data = {
-		country: 'uk',
-		pretty: '1',
-		encoding: 'json',
-		listing_type: 'buy',
-		action: 'search_listings',
-		page: pageNumber,
-	};
-	data[ key ] = value;
+export function urlForQueryAndPage(key, value, pageNumber) {
+  const data = {
+    country: 'uk',
+    pretty: '1',
+    encoding: 'json',
+    listing_type: 'buy',
+    action: 'search_listings',
+    page: pageNumber
+  };
+  data[key] = value;
 
-	const querystring = Object.keys( data )
-		.map( key => key + '=' + encodeURIComponent( data[ key ] ) )
-		.join( '&' );
+  const querystring = Object.keys(data)
+    .map(key => key + '=' + encodeURIComponent(data[key]))
+    .join('&');
 
-	return 'https://api.nestoria.co.uk/api?' + querystring;
+  return 'https://api.nestoria.co.uk/api?' + querystring;
 }

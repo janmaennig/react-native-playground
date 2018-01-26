@@ -8,73 +8,77 @@ import {
   View,
   Button,
   ActivityIndicator,
-  Image,
+  Image
 } from 'react-native';
 import SearchResults from './SearchResults';
 import { urlForQueryAndPage } from './services/SearchHandlers';
 
 export default class SearchPage extends Component<{}> {
-  constructor( props ) {
-    super( props );
+  constructor(props) {
+    super(props);
     this.state = {
       searchString: 'london',
       isLoading: false,
-      message: '',
+      message: ''
     };
   }
 
-  _executeQuery = ( query ) => {
-    this.setState( { isLoading: true } );
-    fetch( query )
-      .then( response => response.json() )
-      .then( json => this._handleResponse( json.response ) )
-      .catch( error =>
-        this.setState( {
+  _executeQuery = query => {
+    this.setState({ isLoading: true });
+    fetch(query)
+      .then(response => response.json())
+      .then(json => this._handleResponse(json.response))
+      .catch(error =>
+        this.setState({
           isLoading: false,
           message: 'Something bad happened ' + error
-        } ) );
+        })
+      );
   };
-  _handleResponse = ( response ) => {
-    this.setState( {
+  _handleResponse = response => {
+    this.setState({
       isLoading: false,
       message: ''
-    } );
-    if ( response.application_response_code.substr( 0, 1 ) === '1' ) {
-      this.props.navigator.push( {
+    });
+    if (response.application_response_code.substr(0, 1) === '1') {
+      this.props.navigator.push({
         title: 'Results',
         component: SearchResults,
-        passProps: { listings: response.listings, place_name: this.state.searchString }
-      } );
+        passProps: {
+          listings: response.listings,
+          place_name: this.state.searchString
+        }
+      });
     } else {
-      this.setState( { message: 'Location not recognized; please try again.' } );
+      this.setState({ message: 'Location not recognized; please try again.' });
     }
   };
   _onSearchPressed = () => {
-    const query = urlForQueryAndPage( 'place_name', this.state.searchString, 1 );
+    const query = urlForQueryAndPage('place_name', this.state.searchString, 1);
 
-    console.log( query );
+    console.log(query);
 
-    this._executeQuery( query );
+    this._executeQuery(query);
   };
-  _onSearchTextChanged = ( event ) => {
-    this.setState( { searchString: event.nativeEvent.text } );
+  _onSearchTextChanged = event => {
+    this.setState({ searchString: event.nativeEvent.text });
   };
 
   _refresh = () => {
-    return new Promise( ( resolve ) => {
-      setTimeout( () => {
-        resolve()
-      }, 2000 )
-    } );
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    });
   };
 
   render() {
-    const spinner = this.state.isLoading ? <ActivityIndicator size='large' /> : null;
+    const spinner = this.state.isLoading ? (
+      <ActivityIndicator size="large" />
+    ) : null;
     return (
       <View style={styles.container}>
-        <Text style={styles.description}>
-          Search for houses to buy!
-        </Text>
+        <Text style={styles.description}>Search for houses to buy!</Text>
         <Text style={styles.description}>
           Search by place-name or postcode.
         </Text>
@@ -83,14 +87,11 @@ export default class SearchPage extends Component<{}> {
             style={styles.searchInput}
             value={this.state.searchString}
             onChange={this._onSearchTextChanged}
-            placeholder='Search via name or postcode' />
-          <Button
-            onPress={this._onSearchPressed}
-            color='#48BBEC'
-            title='Go'
+            placeholder="Search via name or postcode"
           />
+          <Button onPress={this._onSearchPressed} color="#48BBEC" title="Go" />
         </View>
-        <Image source={require( './Resources/house.png' )} style={styles.image} />
+        <Image source={require('./Resources/house.png')} style={styles.image} />
         {spinner}
         <Text style={styles.description}>{this.state.message}</Text>
       </View>
@@ -98,7 +99,7 @@ export default class SearchPage extends Component<{}> {
   }
 }
 
-const styles = StyleSheet.create( {
+const styles = StyleSheet.create({
   description: {
     marginBottom: 20,
     fontSize: 18,
@@ -113,7 +114,7 @@ const styles = StyleSheet.create( {
   flowRight: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'stretch',
+    alignSelf: 'stretch'
   },
   searchInput: {
     height: 36,
@@ -124,10 +125,10 @@ const styles = StyleSheet.create( {
     borderWidth: 1,
     borderColor: '#48BBEC',
     borderRadius: 8,
-    color: '#48BBEC',
+    color: '#48BBEC'
   },
   image: {
     width: 217,
-    height: 138,
-  },
-} );
+    height: 138
+  }
+});
